@@ -1,0 +1,6 @@
+{
+  "name": "CurePlus Pharmacy POS",
+  "description": "CurePlus Pharmacy (کیور پلس فارمیسی) — Bilingual English & Urdu Pharmacy POS, Barcode Scanner, FEFO Batch & Expiry Management, and 80mm Thermal Receipt System in PKR.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": []
+}

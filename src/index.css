@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    --font-urdu: 'Noto Sans Arabic', 'Noto Nastaliq Urdu', system-ui, sans-serif;
+    --font-urdu-display: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.font-urdu {
+  font-family: var(--font-urdu);
+  line-height: 1.7;
+}
+
+.font-urdu-nastaliq {
+  font-family: var(--font-urdu-display);
+  line-height: 2.1;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+/* Custom sleek scrollbar for dense POS grids */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.55);
+}
+
+/* Thermal Receipt, Barcode & A4 Report Print Rules */
+#thermal-print-portal,
+#barcode-print-portal,
+#report-print-portal {
+  display: none;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Hide main React UI when a dedicated print portal is active */
+  body[data-print-mode='thermal'] #root,
+  body[data-print-mode='barcode'] #root,
+  body[data-print-mode='report'] #root {
+    display: none !important;
+  }
+
+  body[data-print-mode='thermal'] #thermal-print-portal {
+    display: block !important;
+    width: var(--thermal-paper-width, 80mm) !important;
+    max-width: var(--thermal-paper-width, 80mm) !important;
+    margin: 0 !important;
+    padding: 1.5mm 2.5mm 4mm 2.5mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  body[data-print-mode='barcode'] #barcode-print-portal {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 4mm !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 6mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  body[data-print-mode='report'] #report-print-portal {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Fallback if user prints without portal attribute */
+  body:not([data-print-mode]) #printable-thermal-area {
+    width: var(--thermal-paper-width, 80mm) !important;
+    margin: 0 !important;
+    padding: 2mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
